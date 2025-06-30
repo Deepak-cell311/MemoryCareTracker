@@ -1,14 +1,17 @@
-import { defineConfig } from "drizzle-kit";
-
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL, ensure the database is provisioned");
-}
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
-  out: "./migrations",
-  schema: "./shared/schema.ts",
-  dialect: "postgresql",
-  dbCredentials: {
-    url: process.env.DATABASE_URL,
+  plugins: [react()],
+  root: "client",
+  build: {
+    outDir: "../dist",
+    emptyOutDir: true,
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "client", "src")
+    }
+  }
 });
